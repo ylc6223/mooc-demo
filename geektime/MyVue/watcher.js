@@ -1,4 +1,5 @@
 class Watcher {
+    //watcher对象记录了vue实例中被依赖的相关key
     constructor({vm, key, cb}) {
         this.vm = vm
         //key=>data中的属性名称
