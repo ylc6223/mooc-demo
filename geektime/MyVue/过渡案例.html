@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>transition</title>
+    <script src="../vue.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #app {
+            position: relative;
+            background-color: #2ecc71;
+            width: 100%;
+            height: 100vh;
+        }
+
+        #btn {
+            appearance: none;
+            border: none;
+            display: block;
+            width: 100px;
+            height: 50px;
+            margin: 0 auto;
+            color: #fff;
+            font-size: 24px;
+            transform: translateY(50px);
+            background-color: #FFD8D8;
+            box-shadow: 0px 0px 10px 5px rgba(142, 116, 201, 0.34);
+        }
+
+        h3 {
+            //position: absolute;
+            //left: 50%;
+            //top: 50%;
+            //transform: translate(-50%, -50%);
+            color: #3498db;
+            font-size: 32px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--    需求 点击按钮让h3显示 再次点击让h3隐藏-->
+    <button id="btn" @click=trigger>switch</button>
+    <transition name="fade">
+        <h3 v-show="showTitle">this is level3 header title,</h3>
+    </transition>
+
+    <transition name="slide-fade">
+        <p v-show="!showTitle">hello</p>
+    </transition>
+</div>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            flag: false,
+            showTitle: false,
+        },
+        methods: {
+            trigger() {
+                this.showTitle = !this.showTitle
+            }
+        }
+    });
+</script>
+</body>
+<style>
+    .fade-enter-active, .fade-leave-active {
+        transition: all .5s;
+    }
+
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+        //transform: translateX(-100%);
+    }
+
+    .fade-enter-to, .fade-leave {
+        opacity: 1;
+        //transform: translateX(0);
+    }
+
+//    ============
+    /* 可以设置不同的进入和离开动画 */
+    /* 设置持续时间和动画函数 */
+    .slide-fade-enter-active {
+        transition: all .3s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+        /* .slide-fade-leave-active for below version 2.1.8 */ {
+        transform: translateX(10px);
+        opacity: 0;
+    }
+</style>
+</html>
+
+
